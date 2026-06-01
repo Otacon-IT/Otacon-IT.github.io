@@ -19,12 +19,20 @@
     .reveal {
       opacity: 0;
       transform: translateY(-24px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
       will-change: opacity, transform;
     }
     .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: revealFadeDown 0.8s ease-out forwards;
+    }
+    @keyframes revealFadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .site-header {
@@ -84,12 +92,10 @@
       border-color: #50F289 !important;
     }
 
-    html, body {
-      overflow-x: hidden;
-    }
     .hero-nodes-section {
       position: relative;
       background-color: #02080D;
+      clip-path: inset(-500px 0 -1500px 0);
     }
     .hero-canvas {
       position: absolute;
@@ -410,7 +416,8 @@
       let rafId = null;
 
       function setupCanvas() {
-        const dpr = window.devicePixelRatio || 1;
+        const rawDpr = window.devicePixelRatio || 1;
+        const dpr = Math.min(rawDpr, 1.5);
         const rect = canvas.getBoundingClientRect();
         width = rect.width;
         height = rect.height;
@@ -462,7 +469,7 @@
           from: fromIdx,
           to: toIdx,
           t: 0,
-          speed: 0.011 + Math.random() * 0.014
+          speed: 0.015 + Math.random() * 0.017
         });
       }
 
@@ -476,12 +483,13 @@
         }
       }
 
-      function step() {
-        for (let n of nodes) n.glow *= 0.93;
+      function step(dt) {
+        const decay = Math.pow(0.93, dt);
+        for (let n of nodes) n.glow *= decay;
 
         const next = [];
         for (let p of pulses) {
-          p.t += p.speed;
+          p.t += p.speed * dt;
           if (p.t >= 1) {
             const target = nodes[p.to];
             target.glow = 1;
@@ -559,8 +567,14 @@
         ctx.shadowBlur = 0;
       }
 
-      function loop() {
-        step();
+      let lastFrameTime = 0;
+      function loop(now) {
+        if (typeof now !== 'number') now = performance.now();
+        if (!lastFrameTime) lastFrameTime = now;
+        const dtMs = Math.min(80, now - lastFrameTime);
+        lastFrameTime = now;
+        const dt = dtMs / (1000 / 60);
+        step(dt);
         draw();
         rafId = requestAnimationFrame(loop);
       }
@@ -638,6 +652,7 @@
         if (document.hidden) {
           if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
         } else if (!rafId) {
+          lastFrameTime = 0;
           loop();
         }
       });
@@ -653,40 +668,35 @@
       if (!header) return;
       let lastScrollY = window.scrollY;
       let ticking = false;
-      const threshold = 8;
 
       function isMobileMenuOpen() {
         return mobileMenuEl && !mobileMenuEl.classList.contains('hidden');
       }
 
       function updateHeader() {
-        const currentY = window.scrollY;
-        const delta = currentY - lastScrollY;
+        const currentY = window.scrollY < 0 ? 0 : window.scrollY;
 
-        if (isMobileMenuOpen()) {
+        if (isMobileMenuOpen() || currentY < 10) {
           header.classList.remove('is-hidden');
-          lastScrollY = currentY;
-          ticking = false;
-          return;
+        } else if (currentY < lastScrollY) {
+          header.classList.remove('is-hidden');
+        } else if (currentY > lastScrollY + 5 && currentY > header.offsetHeight) {
+          header.classList.add('is-hidden');
         }
 
-        if (Math.abs(delta) > threshold) {
-          if (delta > 0 && currentY > header.offsetHeight) {
-            header.classList.add('is-hidden');
-          } else if (delta < 0) {
-            header.classList.remove('is-hidden');
-          }
-          lastScrollY = currentY;
-        }
+        lastScrollY = currentY;
         ticking = false;
       }
 
-      window.addEventListener('scroll', function() {
+      function onScroll() {
         if (!ticking) {
           window.requestAnimationFrame(updateHeader);
           ticking = true;
         }
-      }, { passive: true });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('touchmove', onScroll, { passive: true });
     })();
 
     (function() {
