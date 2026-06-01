@@ -14,6 +14,106 @@
   emailjs.init("0O01ch0EJDCh2nl6V");
   })();
   </script>
+
+  <style>
+    .reveal {
+      opacity: 0;
+      transform: translateY(-24px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .site-header {
+      transition: transform 0.7s ease;
+      will-change: transform;
+    }
+    .site-header.is-hidden {
+      transform: translateY(-100%);
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    .nav-link:hover {
+      background-color: #50F289;
+      color: #02080D !important;
+    }
+    .nav-link-mobile {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    .nav-link-mobile:hover {
+      background-color: #50F289;
+      color: #02080D !important;
+    }
+
+    .cta-button {
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cta-button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 24px rgba(80, 242, 137, 0.55), 0 0 48px rgba(73, 242, 115, 0.3);
+    }
+
+    .benefit-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .benefit-card:hover {
+      transform: scale(1.05);
+      border-color: #50F289 !important;
+      box-shadow: 0 0 24px rgba(80, 242, 137, 0.45), 0 0 48px rgba(73, 242, 115, 0.25);
+      z-index: 2;
+      position: relative;
+    }
+
+    .faq-item {
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+    .faq-item.is-open {
+      box-shadow: 0 0 20px rgba(80, 242, 137, 0.55), 0 0 40px rgba(73, 242, 115, 0.25);
+      border-color: #50F289 !important;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+    .hero-nodes-section {
+      position: relative;
+      background-color: #02080D;
+    }
+    .hero-canvas {
+      position: absolute;
+      top: -120px;
+      left: -120px;
+      width: calc(100% + 240px);
+      height: calc(100% + 700px);
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    #nosotros,
+    #beneficios,
+    #preguntas,
+    #contacto,
+    footer {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SNQBTV7CT2"></script>
@@ -25,19 +125,19 @@
   gtag('config', 'G-SNQBTV7CT2');
 </script>
 <body class="text-gray-900" style="background-color: #02080D;">
-  <header style="background-color: #000000; border-color: #0C261F;" class="shadow-sm border-b sticky top-0 z-50">
+  <header id="site-header" style="background-color: #000000; border-color: #0C261F;" class="site-header shadow-sm border-b sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center">
         <a href="#" class="flex items-center">
           <img src="https://i.imgur.com/RFOmknU.png" alt="OTACON Logo" class="h-32 w-auto object-contain ">
         </a>
-        
-        <nav class="hidden md:flex space-x-8">
-          <a href="#servicios" class="transition-colors" style="color: #49F273;" onmouseover="this.style.color='#50F289'" onmouseout="this.style.color='#49F273'">Servicios</a>
-          <a href="#nosotros" class="transition-colors" style="color: #49F273;" onmouseover="this.style.color='#50F289'" onmouseout="this.style.color='#49F273'">Nosotros</a>
-          <a href="#beneficios" class="transition-colors" style="color: #49F273;" onmouseover="this.style.color='#50F289'" onmouseout="this.style.color='#49F273'">Beneficios</a>
-          <a href="#preguntas" class="transition-colors" style="color: #49F273;" onmouseover="this.style.color='#50F289'" onmouseout="this.style.color='#49F273'">FAQ</a>
-          <a href="#contacto" class="transition-colors" style="color: #49F273;" onmouseover="this.style.color='#50F289'" onmouseout="this.style.color='#49F273'">Contacto</a>
+
+        <nav class="hidden md:flex space-x-2">
+          <a href="#servicios" class="nav-link" style="color: #49F273;">Servicios</a>
+          <a href="#nosotros" class="nav-link" style="color: #49F273;">Nosotros</a>
+          <a href="#beneficios" class="nav-link" style="color: #49F273;">Beneficios</a>
+          <a href="#preguntas" class="nav-link" style="color: #49F273;">FAQ</a>
+          <a href="#contacto" class="nav-link" style="color: #49F273;">Contacto</a>
         </nav>
         <div class="flex items-center space-x-4">
           <button class="md:hidden p-2" id="mobile-menu-button" aria-label="Abrir menú">
@@ -48,12 +148,12 @@
       </div>
       
       <div class="md:hidden hidden" id="mobile-menu">
-        <div class="py-4 space-y-2">
-          <a href="#servicios" class="block py-2 transition-colors" style="color: #49F273;">Servicios</a>
-          <a href="#nosotros" class="block py-2 transition-colors" style="color: #49F273;">Nosotros</a>
-          <a href="#beneficios" class="block py-2 transition-colors" style="color: #49F273;">Beneficios</a>
-          <a href="#preguntas" class="block py-2 transition-colors" style="color: #49F273;">FAQ</a>
-          <a href="#contacto" class="block py-2 transition-colors" style="color: #49F273;">Contacto</a>
+        <div class="py-4 space-y-1">
+          <a href="#servicios" class="nav-link-mobile" style="color: #49F273;">Servicios</a>
+          <a href="#nosotros" class="nav-link-mobile" style="color: #49F273;">Nosotros</a>
+          <a href="#beneficios" class="nav-link-mobile" style="color: #49F273;">Beneficios</a>
+          <a href="#preguntas" class="nav-link-mobile" style="color: #49F273;">FAQ</a>
+          <a href="#contacto" class="nav-link-mobile" style="color: #49F273;">Contacto</a>
         </div>
       </div>
     </div>
@@ -61,18 +161,19 @@
 
   <main>
     <section id="servicios" class="py-20">
-      <section class="text-white py-20 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(to bottom right, #02080D, #0C261F);">
-        <div class="max-w-7xl mx-auto">
+      <section class="hero-nodes-section text-white py-20 px-4 sm:px-6 lg:px-8">
+        <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="max-w-7xl mx-auto hero-content">
           <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8">
+            <div class="space-y-8 reveal">
               <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">Deja de perder horas en tareas repetitivas</h1>
               <p class="text-xl sm:text-2xl leading-relaxed" style="color: #50F289;">Integramos IA en tus procesos para eliminar el error humano y escalar tu operación sin aumentar tus costos fijos.</p>
               <p class="text-lg" style="color: #49F273;">Implementamos automatizaciones reales que ahorran tiempo y dinero desde la primera semana.</p>
               <div class="pt-4">
-                <a href="#contacto" class="inline-flex items-center px-8 py-4 text-white font-semibold rounded-lg transition-colors duration-200 text-lg shadow-lg hover:shadow-xl" style="background-color: #50F289; color: #02080D;" onmouseover="this.style.backgroundColor='#49F273'" onmouseout="this.style.backgroundColor='#50F289'">Quiero mi consultoría gratuita <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a>
+                <a href="#contacto" class="cta-button inline-flex items-center px-8 py-4 text-white font-semibold rounded-lg text-lg shadow-lg" style="background-color: #50F289; color: #02080D;" onmouseover="this.style.backgroundColor='#49F273'" onmouseout="this.style.backgroundColor='#50F289'">Quiero mi consultoría gratuita <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a>
               </div>
             </div>
-            <div class="lg:pl-8">
+            <div class="lg:pl-8 reveal">
               <img src="https://i.imgur.com/8rooOtb.png" alt="Automatización con IA en el trabajo" class="w-full rounded-2xl object-cover shadow-2xl" loading="lazy" />
             </div>
           </div>
@@ -83,25 +184,25 @@
     <section id="nosotros" class="py-16">
       <section class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: #0C261F;">
         <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
+          <div class="text-center mb-16 reveal">
             <h2 class="text-3xl sm:text-4xl font-bold mb-6" style="color: #50F289;">El equipo detrás de tu eficiencia</h2>
           </div>
           <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
+            <div class="space-y-6 reveal">
               <p class="text-lg leading-relaxed text-white">Somos Javier y Lucas, dos profesionales convencidos de que la tecnología debe ser un aliado, no una complicación. Unimos nuestra base en ingeniería de procesos con especializaciones en Inteligencia Artificial Generativa y Ciencia de Datos para ofrecer soluciones prácticas. En OTACON, nos enfocamos en entender tu flujo de trabajo para transformarlo en un sistema ágil, permitiendo que tu tiempo se invierta en lo que realmente hace crecer tu negocio</p>
               <p class="text-lg leading-relaxed text-white">Nuestra misión es simple: que la tecnología trabaje para ti, y no al revés.</p>
               <div class="grid sm:grid-cols-2 gap-6 pt-6">
-                <div class="p-6 rounded-lg" style="background-color: #02080D; border: 1px solid #50F289;">
+                <div class="reveal p-6 rounded-lg" style="background-color: #02080D; border: 1px solid #50F289;">
                   <h3 class="font-semibold mb-2" style="color: #50F289;">Javier</h3>
                   <p class="text-white">Especialista en Automatización Técnica y Análisis de Datos</p>
                 </div>
-                <div class="p-6 rounded-lg" style="background-color: #02080D; border: 1px solid #50F289;">
+                <div class="reveal p-6 rounded-lg" style="background-color: #02080D; border: 1px solid #50F289;">
                   <h3 class="font-semibold mb-2" style="color: #50F289;">Lucas</h3>
                   <p class="text-white">Especialista en Optimización de Procesos e Integración de IA</p>
                 </div>
               </div>
             </div>
-            <div class="lg:pl-8">
+            <div class="lg:pl-8 reveal">
               <img src="https://i.imgur.com/wD1hkZl.jpeg" alt="Javier y Lucas, equipo de OTACON" class="w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
             </div>
           </div>
@@ -112,26 +213,26 @@
     <section id="beneficios" class="py-16">
       <section class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: #02080D;">
         <div class="max-w-7xl mx-auto">
-          <div class="text-center mb-16">
+          <div class="text-center mb-16 reveal">
             <h2 class="text-3xl sm:text-4xl font-bold mb-6" style="color: #50F289;">Beneficios que transforman tu negocio</h2>
             <p class="text-xl max-w-3xl mx-auto" style="color: #49F273;">La automatización con IA no es el futuro, es el presente. Descubre cómo puede revolucionar tu empresa.</p>
           </div>
           <div class="grid md:grid-cols-3 gap-8">
-            <div class="p-8 rounded-2xl" style="background: linear-gradient(to bottom right, #02080D, #0C261F); border: 1px solid #50F289;">
+            <div class="benefit-card reveal p-8 rounded-2xl" style="background: linear-gradient(to bottom right, #02080D, #0C261F); border: 1px solid #50F289;">
               <div class="mb-6">
                 <img src="https://i.imgur.com/kEZtb2E.jpeg" alt="Ahorro de tiempo" class="w-full rounded-xl object-cover shadow-sm" loading="lazy" />
               </div>
               <h3 class="text-xl font-semibold mb-4" style="color: #50F289;">Ahorro de Tiempo Inmediato</h3>
               <p class="text-white">Elimina horas de trabajo manual repetitivo. Nuestras automatizaciones trabajan 24/7 sin descanso, liberando a tu equipo para tareas estratégicas.</p>
             </div>
-            <div class="p-8 rounded-2xl" style="background: linear-gradient(to bottom right, #02080D, #0C261F); border: 1px solid #50F289;">
+            <div class="benefit-card reveal p-8 rounded-2xl" style="background: linear-gradient(to bottom right, #02080D, #0C261F); border: 1px solid #50F289;">
               <div class="mb-6">
                 <img src="https://i.imgur.com/mR1Cvz1.jpeg" alt="Reducción de errores" class="w-full rounded-xl object-cover shadow-sm" loading="lazy" />
               </div>
               <h3 class="text-xl font-semibold mb-4" style="color: #50F289;">Cero Errores Humanos</h3>
               <p class="text-white">La IA no se cansa ni se distrae. Procesa información con precisión absoluta, eliminando costosos errores operativos.</p>
             </div>
-            <div class="p-8 rounded-2xl" style="background: linear-gradient(to bottom right, #02080D, #0C261F); border: 1px solid #50F289;">
+            <div class="benefit-card reveal p-8 rounded-2xl" style="background: linear-gradient(to bottom right, #02080D, #0C261F); border: 1px solid #50F289;">
               <div class="mb-6">
                 <img src="https://i.imgur.com/3Hhesyd.jpeg" alt="Escalabilidad" class="w-full rounded-xl object-cover shadow-sm" loading="lazy" />
               </div>
@@ -146,14 +247,14 @@
     <section id="preguntas" class="py-16">
       <section class="py-16" style="background-color: #0C261F;">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-12">
+          <div class="text-center mb-12 reveal">
             <h2 class="text-3xl font-bold mb-4" style="color: #50F289;">Preguntas Frecuentes</h2>
             <p class="text-lg text-white">Resolvemos tus dudas sobre automatización con IA</p>
           </div>
-          
+
           <div class="grid lg:grid-cols-2 gap-12 items-start">
-            <div class="space-y-6">
-              <div class="rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
+            <div class="space-y-6 reveal">
+              <div class="faq-item reveal rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
                 <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:opacity-80 transition-opacity" onclick="toggleFaq(this)">
                   <h3 class="font-semibold" style="color: #50F289;">¿Qué es exactamente la automatización con IA?</h3>
                   <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #50F289;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -162,7 +263,7 @@
                   <p>Es la arquitectura de sistemas que ejecutan tareas repetitivas, que hoy haces manualmente, de forma instantánea y sin errores.</p>
                 </div>
               </div>
-              <div class="rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
+              <div class="faq-item reveal rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
                 <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:opacity-80 transition-opacity" onclick="toggleFaq(this)">
                   <h3 class="font-semibold" style="color: #50F289;">¿Mi empresa es muy pequeña para esto?</h3>
                   <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #50F289;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -171,7 +272,7 @@
                   <p>Al contrario. La IA es la herramienta que permite a las empresas pequeñas competir con las grandes, optimizando recursos al máximo.</p>
                 </div>
               </div>
-              <div class="rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
+              <div class="faq-item reveal rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
                 <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:opacity-80 transition-opacity" onclick="toggleFaq(this)">
                   <h3 class="font-semibold" style="color: #50F289;">¿Necesito saber de programación para usar sus sistemas?</h3>
                   <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #50F289;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -180,7 +281,7 @@
                   <p>Nada. Nosotros nos encargamos de toda la parte técnica. Tú recibirás un sistema listo para usar, intuitivo y amigable.</p>
                 </div>
               </div>
-              <div class="rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
+              <div class="faq-item reveal rounded-lg shadow-sm" style="background-color: #02080D; border: 1px solid #50F289;">
                 <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:opacity-80 transition-opacity" onclick="toggleFaq(this)">
                   <h3 class="font-semibold" style="color: #50F289;">¿Es muy caro implementar estas soluciones?</h3>
                   <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #50F289;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -190,17 +291,34 @@
                 </div>
               </div>
             </div>
-            <div class="lg:sticky lg:top-8">
+            <div class="lg:sticky lg:top-8 reveal">
               <img src="https://i.imgur.com/lPniuHr.png" alt="Ilustración de automatización" class="w-full rounded-2xl object-cover shadow-sm" loading="lazy" />
             </div>
           </div>
         </div>
         <script>
           function toggleFaq(button) {
+            const item = button.closest('.faq-item');
             const content = button.nextElementSibling;
             const icon = button.querySelector('svg');
+            const willOpen = content.classList.contains('hidden');
+
+            document.querySelectorAll('.faq-item').forEach(function(other) {
+              if (other === item) return;
+              const otherContent = other.querySelector('button + div');
+              const otherIcon = other.querySelector('button svg');
+              if (otherContent && !otherContent.classList.contains('hidden')) {
+                otherContent.classList.add('hidden');
+              }
+              if (otherIcon) {
+                otherIcon.style.transform = 'rotate(0deg)';
+              }
+              other.classList.remove('is-open');
+            });
+
             content.classList.toggle('hidden');
-            icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            icon.style.transform = willOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+            item.classList.toggle('is-open', willOpen);
           }
         </script>
       </section>
@@ -210,13 +328,13 @@
       <section class="py-16" style="background-color: #02080D;">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div class="reveal">
               <h2 class="text-3xl font-bold mb-6" style="color: #50F289;">¿Listo para automatizar tu empresa?</h2>
               <p class="text-lg mb-8" style="color: #49F273;">Cuéntanos qué proceso te gustaría optimizar y te mostraremos cómo la IA puede transformar tu operación desde la primera semana.</p>
               <img src="https://cdn.ailandingpage.ai/landingpage_io/user-generate/3258d6ce-8a46-4a8a-83f4-031b1332d1ab/3258d6ce-8a46-4a8a-83f4-031b1332d1ab/contact/contact-visual-cc9be951e469461d8f3946a1f91e1af7.png" alt="Consultoría" class="w-full rounded-2xl object-cover shadow-sm" loading="lazy" />
             </div>
-            
-            <div class="rounded-2xl p-8" style="background-color: #0C261F;">
+
+            <div class="rounded-2xl p-8 reveal" style="background-color: #0C261F;">
               <form id="contact-form" class="space-y-6">
                 <div class="grid grid-cols-2 gap-4">
                   <div>
@@ -251,8 +369,342 @@
     </section>
   </main>
 
+  <footer style="background-color: #000000; border-top: 1px solid #FFFFFF;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-8">
+        <div class="flex items-center gap-4 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 shrink-0" style="opacity: 0.85;">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            <path d="M8.5 9.5c0 3.3 2.7 6 6 6"></path>
+            <path d="M8.5 9.5c0-.8.7-1.5 1.5-1.5.3 0 .6.1.8.3l1 1.3c.2.3.2.7 0 1l-.5.7c.4.9 1.1 1.6 2 2l.7-.5c.3-.2.7-.2 1 0l1.3 1c.2.2.3.5.3.8 0 .8-.7 1.5-1.5 1.5"></path>
+          </svg>
+          <p class="text-base sm:text-lg leading-snug">
+            <span class="font-semibold">Lucas:</span> 2644109962
+            <span class="mx-2 opacity-60">/</span>
+            <span class="font-semibold">Javier:</span> 2645674033
+          </p>
+        </div>
+
+        <div class="flex items-center gap-4 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 shrink-0" style="opacity: 0.85;">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <p class="text-base sm:text-lg leading-snug">San Juan, Argentina</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <script>
     lucide.createIcons();
+
+    (function() {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let nodes = [];
+      let edges = [];
+      let pulses = [];
+      let width = 0, height = 0;
+      let rafId = null;
+
+      function setupCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        buildGraph();
+      }
+
+      function buildGraph() {
+        nodes = [];
+        edges = [];
+        pulses = [];
+        const area = width * height;
+        const target = Math.max(28, Math.min(90, Math.floor(area / 14000)));
+        const cols = Math.max(4, Math.round(Math.sqrt(target * (width / Math.max(height, 1)))));
+        const rows = Math.max(3, Math.round(target / cols));
+        const cellW = width / cols;
+        const cellH = height / rows;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const jx = (Math.random() - 0.5) * cellW * 0.65;
+            const jy = (Math.random() - 0.5) * cellH * 0.65;
+            nodes.push({
+              x: (c + 0.5) * cellW + jx,
+              y: (r + 0.5) * cellH + jy,
+              glow: 0,
+              neighbors: []
+            });
+          }
+        }
+        const maxDist = Math.hypot(cellW, cellH) * 1.4;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            if (Math.hypot(dx, dy) < maxDist) {
+              edges.push({ a: i, b: j });
+              const idx = edges.length - 1;
+              nodes[i].neighbors.push({ edge: idx, other: j });
+              nodes[j].neighbors.push({ edge: idx, other: i });
+            }
+          }
+        }
+      }
+
+      function spawnPulse(fromIdx, toIdx) {
+        pulses.push({
+          from: fromIdx,
+          to: toIdx,
+          t: 0,
+          speed: 0.011 + Math.random() * 0.014
+        });
+      }
+
+      function seedPulses(count) {
+        for (let k = 0; k < count; k++) {
+          const start = Math.floor(Math.random() * nodes.length);
+          const node = nodes[start];
+          if (!node || node.neighbors.length === 0) continue;
+          const nb = node.neighbors[Math.floor(Math.random() * node.neighbors.length)];
+          spawnPulse(start, nb.other);
+        }
+      }
+
+      function step() {
+        for (let n of nodes) n.glow *= 0.93;
+
+        const next = [];
+        for (let p of pulses) {
+          p.t += p.speed;
+          if (p.t >= 1) {
+            const target = nodes[p.to];
+            target.glow = 1;
+            if (target.neighbors.length > 0 && Math.random() < 0.78) {
+              const opts = target.neighbors.filter(n => n.other !== p.from);
+              const pool = opts.length ? opts : target.neighbors;
+              const pick = pool[Math.floor(Math.random() * pool.length)];
+              spawnPulse(p.to, pick.other);
+              if (Math.random() < 0.22 && pool.length > 1) {
+                let pick2 = pool[Math.floor(Math.random() * pool.length)];
+                if (pick2.other !== pick.other) spawnPulse(p.to, pick2.other);
+              }
+            }
+          } else {
+            next.push(p);
+          }
+        }
+        pulses = next;
+        if (pulses.length < 7) seedPulses(2);
+        if (pulses.length > 70) pulses.length = 70;
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.strokeStyle = 'rgba(73, 242, 115, 0.08)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let e of edges) {
+          ctx.moveTo(nodes[e.a].x, nodes[e.a].y);
+          ctx.lineTo(nodes[e.b].x, nodes[e.b].y);
+        }
+        ctx.stroke();
+
+        for (let p of pulses) {
+          const a = nodes[p.from];
+          const b = nodes[p.to];
+          const x = a.x + (b.x - a.x) * p.t;
+          const y = a.y + (b.y - a.y) * p.t;
+          const tStart = Math.max(0, p.t - 0.22);
+          const sx = a.x + (b.x - a.x) * tStart;
+          const sy = a.y + (b.y - a.y) * tStart;
+          const grad = ctx.createLinearGradient(sx, sy, x, y);
+          grad.addColorStop(0, 'rgba(80, 242, 137, 0)');
+          grad.addColorStop(1, 'rgba(80, 242, 137, 0.95)');
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+
+          ctx.shadowColor = '#50F289';
+          ctx.shadowBlur = 18;
+          ctx.fillStyle = '#A6FFC4';
+          ctx.beginPath();
+          ctx.arc(x, y, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+
+        for (let n of nodes) {
+          const alpha = 0.28 + n.glow * 0.72;
+          ctx.fillStyle = 'rgba(80, 242, 137, ' + alpha + ')';
+          if (n.glow > 0.05) {
+            ctx.shadowColor = '#50F289';
+            ctx.shadowBlur = 22 * n.glow;
+          } else {
+            ctx.shadowBlur = 0;
+          }
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, 3.6 + n.glow * 3.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+      }
+
+      function loop() {
+        step();
+        draw();
+        rafId = requestAnimationFrame(loop);
+      }
+
+      const heroSection = document.querySelector('.hero-nodes-section');
+      let lastHoverNode = -1;
+      let lastHoverTime = 0;
+      const HOVER_RADIUS = 38;
+      const HOVER_COOLDOWN_MS = 350;
+
+      function handlePointer(clientX, clientY) {
+        if (!heroSection) return;
+        const heroRect = heroSection.getBoundingClientRect();
+        if (
+          clientX < heroRect.left || clientX > heroRect.right ||
+          clientY < heroRect.top || clientY > heroRect.bottom
+        ) return;
+
+        const canvasRect = canvas.getBoundingClientRect();
+        const x = clientX - canvasRect.left;
+        const y = clientY - canvasRect.top;
+
+        let nearestIdx = -1;
+        let nearestDist = HOVER_RADIUS;
+        for (let i = 0; i < nodes.length; i++) {
+          const dx = nodes[i].x - x;
+          const dy = nodes[i].y - y;
+          const d = Math.hypot(dx, dy);
+          if (d < nearestDist) {
+            nearestDist = d;
+            nearestIdx = i;
+          }
+        }
+
+        if (nearestIdx === -1) {
+          if (nearestDist > HOVER_RADIUS * 1.6) lastHoverNode = -1;
+          return;
+        }
+
+        const now = performance.now();
+        if (nearestIdx === lastHoverNode && now - lastHoverTime < HOVER_COOLDOWN_MS) return;
+
+        const node = nodes[nearestIdx];
+        node.glow = 1;
+        if (node.neighbors.length > 0) {
+          const shuffled = node.neighbors.slice();
+          for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+          }
+          const branches = Math.min(shuffled.length, 1 + (Math.random() < 0.55 ? 1 : 0));
+          for (let i = 0; i < branches; i++) {
+            spawnPulse(nearestIdx, shuffled[i].other);
+          }
+        }
+        lastHoverNode = nearestIdx;
+        lastHoverTime = now;
+      }
+
+      window.addEventListener('mousemove', function(e) {
+        handlePointer(e.clientX, e.clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', function(e) {
+        if (e.touches && e.touches[0]) {
+          handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      let resizeTimer = null;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(setupCanvas, 150);
+      });
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        } else if (!rafId) {
+          loop();
+        }
+      });
+
+      setupCanvas();
+      seedPulses(9);
+      loop();
+    })();
+
+    (function() {
+      const header = document.getElementById('site-header');
+      const mobileMenuEl = document.getElementById('mobile-menu');
+      if (!header) return;
+      let lastScrollY = window.scrollY;
+      let ticking = false;
+      const threshold = 8;
+
+      function isMobileMenuOpen() {
+        return mobileMenuEl && !mobileMenuEl.classList.contains('hidden');
+      }
+
+      function updateHeader() {
+        const currentY = window.scrollY;
+        const delta = currentY - lastScrollY;
+
+        if (isMobileMenuOpen()) {
+          header.classList.remove('is-hidden');
+          lastScrollY = currentY;
+          ticking = false;
+          return;
+        }
+
+        if (Math.abs(delta) > threshold) {
+          if (delta > 0 && currentY > header.offsetHeight) {
+            header.classList.add('is-hidden');
+          } else if (delta < 0) {
+            header.classList.remove('is-hidden');
+          }
+          lastScrollY = currentY;
+        }
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(updateHeader);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    (function() {
+      const revealElements = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        revealElements.forEach(function(el) { el.classList.add('is-visible'); });
+        return;
+      }
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealElements.forEach(function(el) { observer.observe(el); });
+    })();
 
     const menuBtn = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -304,3 +756,4 @@
   </script>
 </body>
 </html>
+
